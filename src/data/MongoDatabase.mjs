@@ -9,6 +9,7 @@ export class MongoDatabase {
     }
     async connect() {
         console.log(alert("Connecting to database", "databaseInfo"));
+        mongoose.set("strictQuery", false);
         mongoose.connect(this.config.URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,

@@ -6,4 +6,3 @@ const client = new BotClient();
 
 // Handlers \\
 loadEvents(client);
-

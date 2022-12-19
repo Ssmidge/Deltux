@@ -23,15 +23,20 @@ async function loadCommands(client) {
         await client.commands.set(command.data.name, command);
         await commandArray.push(command.data.toJSON());
 
-        if (client.cluster.id !== 0) return;
         await console.log(chalk.cyan.bold(command.data.name) + chalk.white(" has been loaded as a ") + chalk.blue.bold("COMMAND"));
 
     });
 
+    setTimeout(async () => await registerCommands(client, commandArray), 1000);
+
+
+    return client.commands;
+}
+
+function registerCommands(client, commandArray) {
     client.application.commands.set(commandArray).then(() => {
         console.log(alert("Loaded Commands", "botInfo"));
-    });
-    return client.commands;
+    }).catch((err) => console.log(err));
 }
 
 export { loadCommands };

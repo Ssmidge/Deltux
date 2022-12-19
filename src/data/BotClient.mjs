@@ -55,7 +55,7 @@ export default class BotClient extends Client {
         this.yamlConfig = {
             discordToken: this.config.Discord.Token,
             prefix: this.config.Discord.Prefix,
-            ownerID: this.config.Discord.OwnerID,
+            ownerIDs: this.config.Discord.OwnerIDs,
             mongoURI: this.config.Database.URI,
         };
 
@@ -75,6 +75,7 @@ export default class BotClient extends Client {
         
         await this.login(this.yamlConfig.discordToken).catch((err) => {
             console.log(alert(err, "defaultBarError"));
+            process.exit(-1);
         });
 
     }
@@ -82,7 +83,8 @@ export default class BotClient extends Client {
     async ensureYamlConfig() {
         if (this.yamlConfig.discordToken?.length < 10) this.yamlConfig.discordToken = defaultConfigData.discordToken;
         if (this.yamlConfig.prefix?.length < 1) this.yamlConfig.prefix = defaultConfigData.prefix;
-        if (this.yamlConfig.ownerID?.length < 1) this.yamlConfig.ownerID = defaultConfigData.owners[0];
+        if (this.yamlConfig.ownerIDs?.length < 1) this.yamlConfig.ownerIDs = defaultConfigData.owners;
+
 
         for (const [key, value] of Object.entries(this.yamlConfig))
             if (!this.yamlConfig[key]?.length) this.yamlConfig[key] = defaultConfigData[key];
